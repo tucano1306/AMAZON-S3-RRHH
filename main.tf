@@ -4,9 +4,6 @@ provider "aws" {
 
 resource "aws_s3_bucket" "hr_documents" {
   bucket = var.bucket_name
-
-  # Configurar políticas de acceso para asegurar el bucket
-  policy = data.aws_iam_policy_document.bucket_policy.json
 }
 
 # Recurso separado para el versionado del bucket
@@ -27,6 +24,12 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encryption" {
       sse_algorithm = "AES256"
     }
   }
+}
+
+# Recurso separado para la configuración de la política del bucket
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  bucket = aws_s3_bucket.hr_documents.id
+  policy = data.aws_iam_policy_document.bucket_policy.json
 }
 
 data "aws_iam_policy_document" "bucket_policy" {
