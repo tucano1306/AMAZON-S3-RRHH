@@ -5,22 +5,28 @@ provider "aws" {
 resource "aws_s3_bucket" "hr_documents" {
   bucket = var.bucket_name
 
-  # Habilitar el versionado para mantener versiones de los documentos
-  versioning {
-    enabled = true
-  }
-
-  # Configurar el cifrado por defecto para los objetos en el bucket
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
-  }
-
   # Configurar políticas de acceso para asegurar el bucket
   policy = data.aws_iam_policy_document.bucket_policy.json
+}
+
+# Recurso separado para el versionado del bucket
+resource "aws_s3_bucket_versioning" "versioning" {
+  bucket = aws_s3_bucket.hr_documents.bucket
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+# Recurso separado para la configuración de cifrado del lado del servidor
+resource "aws_s3_bucket_server_side_encryption_configuration" "encryption" {
+  bucket = aws_s3_bucket.hr_documents.bucket
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
 }
 
 data "aws_iam_policy_document" "bucket_policy" {

@@ -5,5 +5,5 @@ output "bucket_arn" {
 
 output "bucket_name" {
   description = "El nombre del bucket de S3"
-  value       = aws_s3_bucket.hr_documents-recursos-humanos.bucket
+  value       = aws_s3_bucket.hr_documents.bucket
 }
