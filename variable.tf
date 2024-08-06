@@ -7,17 +7,23 @@ variable "region" {
 variable "bucket_name" {
   description = "El nombre del bucket de S3"
   type        = string
-  default     = "mi-bucket-rrhh"
+  default     = "hr-documents-unique-suffix"  # Cambia esto a un nombre único
 }
 
-variable "read_access_arn" {
-  description = "El ARN de la entidad que tendrá acceso de lectura"
-  type        = string
-  default     = "arn:aws:iam::123456789012:role/ReadAccessRole"
-}
 
-variable "write_access_arn" {
-  description = "El ARN de la entidad que tendrá acceso de escritura"
-  type        = string
-  default     = "arn:aws:iam::123456789012:role/WriteAccessRole"
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
